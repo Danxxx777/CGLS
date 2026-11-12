@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram id="ahorro-futuro" name="Ahorro Futuro">
+    <mxGraphModel dx="5799" dy="2285" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1640" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titulo" parent="1" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=30;fontStyle=1;" value="Cooperativa Ahorro Futuro" vertex="1">
+          <mxGeometry height="44" width="1050" x="-1480" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="actividad" parent="1" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=15;" value="GA-TL-01 · Escenario 4 · Modelado de comunicación entre procesos" vertex="1">
+          <mxGeometry height="28" width="1050" x="-1480" y="79" as="geometry" />
+        </mxCell>
+        <mxCell id="rol-b" parent="1" style="swimlane;html=1;startSize=44;horizontal=1;collapsible=0;rounded=0;fillColor=none;swimlaneFillColor=none;strokeColor=default;fontStyle=1;fontSize=18;align=left;spacingLeft=12;" value="B. Transferencia interna" vertex="1">
+          <mxGeometry height="380" width="760" x="680" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="oCIqJ3nLQlLC4T8pfypU-1" parent="rol-b" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;fontStyle=1;" value="Servicio de transferencias" vertex="1">
+          <mxGeometry height="78" width="174" x="293" y="77" as="geometry" />
+        </mxCell>
+        <mxCell id="b-adaptador" parent="rol-b" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;spacing=9;" value="Adaptador del core" vertex="1">
+          <mxGeometry height="82" width="158" x="24" y="256" as="geometry" />
+        </mxCell>
+        <mxCell id="b-registro" parent="rol-b" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;spacing=9;" value="Registro persistente por idOperacion" vertex="1">
+          <mxGeometry height="82" width="174" x="293" y="256" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" edge="1" parent="rol-b" source="oCIqJ3nLQlLC4T8pfypU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="b-registro" value="3 · SQL/TLS">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-55" y="24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b4" edge="1" parent="rol-b" source="oCIqJ3nLQlLC4T8pfypU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.15;exitY=1;entryX=0.5;entryY=0;" target="b-adaptador" value="4 · gRPC">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b1" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.5;exitY=0;entryX=0;entryY=0.5;" target="oCIqJ3nLQlLC4T8pfypU-1" value="B1 · REST/HTTPS · síncrona&lt;br&gt;idOperacion, cuentas y monto">
+          <mxGeometry relative="1" x="-0.196" y="25" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="-1268" y="195" />
+              <mxPoint x="890" y="195" />
+              <mxPoint x="890" y="241" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b2" edge="1" parent="1" source="oCIqJ3nLQlLC4T8pfypU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" target="mOa-3YTkqyJ719td-Zik-50" value="B2 · gRPC/HTTP2 · síncrona · 200 ms&lt;br&gt;idOperacion y datos de la transferencia">
+          <mxGeometry relative="1" x="-0.0502" y="-35" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1235" y="241" />
+              <mxPoint x="1235" y="1035" />
+              <mxPoint x="-817" y="1035" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rol-c" parent="1" style="swimlane;html=1;startSize=44;horizontal=1;collapsible=0;rounded=0;fillColor=none;swimlaneFillColor=none;strokeColor=default;fontStyle=1;fontSize=18;align=left;spacingLeft=12;" value="C. Transferencia interbancaria y antifraude" vertex="1">
+          <mxGeometry height="1200" width="2040" x="-1507" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-49" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=17;fontStyle=0;fillColor=none;" value="&lt;font&gt;Servicio de transferencias&lt;br&gt;Orquestador&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="250" x="70" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-50" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;fontStyle=0" value="Servicio antifraude&lt;br&gt;&lt;br&gt;Evalúa datos de la operación&lt;br&gt;mediante reglas de riesgo" vertex="1">
+          <mxGeometry height="110" width="280" x="550" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-51" parent="rol-c" style="rhombus;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Orquestador:&lt;br&gt;¿resultado de la&lt;br&gt;evaluación?" vertex="1">
+          <mxGeometry height="130" width="230" x="575" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-52" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Aprobada por antifraude&lt;br&gt;&lt;br&gt;Guardar dictamen&lt;br&gt;Continuar hacia la pasarela" vertex="1">
+          <mxGeometry height="110" width="260" x="930" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-53" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Rechazada por antifraude&lt;br&gt;Guardar rechazo y motivo&lt;br&gt;NO envia al banco" vertex="1">
+          <mxGeometry height="110" width="270" x="400" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-54" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Error / Plazo vencido&lt;br&gt;&lt;br&gt;Guardar si esta pendiente de antifraude y&amp;nbsp;&lt;br&gt;NO envia al banco&lt;br&gt;Gestionar recuperación" vertex="1">
+          <mxGeometry height="110" width="290" x="730" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-55" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=17;fillColor=none;fontStyle=0" value="Pasarela interbancaria&lt;br&gt;&lt;span&gt;Adaptador de red&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="240" x="1420" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-56" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=17;fillColor=none;fontStyle=0" value="Red interbancaria /&lt;br&gt;banco destinatario" vertex="1">
+          <mxGeometry height="110" width="240" x="1700" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-57" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Orquestador: procesar resultado bancario&lt;br&gt;&lt;br&gt;Confirmada / Rechazada por el banco&lt;br&gt;o por conciliar si no hay certeza&lt;br&gt;&lt;br&gt;Consultar antes de reintentar" vertex="1">
+          <mxGeometry height="130" width="350" x="1250" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-58" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Persistir resultado + evento en outbox&lt;br&gt;&lt;br&gt;Misma transacción SQL&lt;br&gt;idOperacion + estado + motivo + idEvento&lt;br&gt;&lt;br&gt;Acción del orquestador sobre el Registro de operaciones" vertex="1">
+          <mxGeometry height="140" width="400" x="510" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-59" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Publicador de outbox&lt;br&gt;&lt;br&gt;Recupera eventos pendientes&lt;br&gt;Publica y gestiona reintentos" vertex="1">
+          <mxGeometry height="110" width="230" x="1060" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-60" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;fontStyle=0" value="Broker de eventos&lt;br&gt;&lt;span&gt;RabbitMQ&lt;/span&gt;&lt;br&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;Colas durables&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="200" x="1490" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-61" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;fillColor=none;fontStyle=0" value="Auditoría y notificaciones&lt;br&gt;&lt;br&gt;Procesamiento idempotente&lt;br&gt;Deduplicación por idEvento&lt;br&gt;ACK tras procesar" vertex="1">
+          <mxGeometry height="120" width="290" x="1490" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-62" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;startArrow=classic;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);entryDx=0;entryDy=0;" target="mOa-3YTkqyJ719td-Zik-79" value="1. Registrar o recuperar operación&lt;br&gt;SQL - TCP/TLS - síncrono&lt;br&gt;Respuesta: reserva o estado existente">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-63" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=1;exitY=0.25;entryX=0;entryY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-50" value="2. Evaluar transferencia&lt;br&gt;idOperacion + datos de la operación&lt;br&gt;gRPC / HTTP/2&amp;nbsp; - síncrona - plazo 200 ms">
+          <mxGeometry relative="1" y="40" as="geometry">
+            <mxPoint x="-20" y="5" as="offset" />
+            <Array as="points">
+              <mxPoint x="410" y="195" />
+              <mxPoint x="410" y="145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-64" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-51" value="3. Respuesta al orquestador&lt;br&gt;decisión + motivo + idOperacion&lt;br&gt;o error / plazo vencido">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-65" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=classic;fontColor=light-dark(#333333,#FFFFFF);fontSize=14;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fillColor=none;fontStyle=0" target="mOa-3YTkqyJ719td-Zik-52" value="Aprobada">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-66" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=classic;fontColor=light-dark(#333333,#FFFFFF);fontSize=14;labelBackgroundColor=#ffffff;exitX=0.25;exitY=0.75;entryX=0.5;entryY=0;fillColor=none;fontStyle=0" target="mOa-3YTkqyJ719td-Zik-53" value="Rechazada">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="535" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-67" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=classic;fontColor=light-dark(#333333,#FFFFFF);fontSize=14;labelBackgroundColor=#ffffff;exitX=0.75;exitY=0.75;entryX=0.5;entryY=0;fillColor=none;fontStyle=0" target="mOa-3YTkqyJ719td-Zik-54" value="Error / Sin dictamen">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="875" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-68" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=classic;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-55" value="&lt;span&gt;5. Enviar trama&lt;br&gt;longitud + idOperacion + cuentas + monto&lt;br&gt;Sockets TCP/TLS - síncrono&lt;br&gt;API de sockets nativa&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-69" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;entryX=0;entryY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-56" value="6a. Solicitud interbancaria&lt;br&gt;Sockets TCP/TLS - síncrono&lt;br&gt;API de sockets nativa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-70" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=1;entryY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-55" value="6b. Respuesta bancaria&lt;br&gt;ACK / rechazo + referencia&lt;br&gt;Misma conexión TCP/TLS">
+          <mxGeometry relative="1" x="-0.5077" y="90" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-71" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-57" value="7. Retorno al orquestador&lt;br&gt;Resultado o incertidumbre&lt;br&gt;Misma conexión de la interacción 4">
+          <mxGeometry relative="1" x="0.0038" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-72" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.2;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-58" value="Estado y evento de rechazo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-73" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.85;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-58" value="Estado y evento pendiente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-74" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;entryX=1;entryY=0.25;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-58" value="Estado y evento del resultado bancario">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1338" y="760" />
+              <mxPoint x="960" y="760" />
+              <mxPoint x="960" y="835" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-75" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-79" value="Actualizar registro + insertar outbox&lt;br&gt;SQL - TCP/TLS - síncrono">
+          <mxGeometry relative="1" x="0.0016" as="geometry">
+            <Array as="points">
+              <mxPoint x="195" y="870" />
+            </Array>
+            <mxPoint x="195" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-76" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=classic;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-59" value="Leer eventos pendientes&lt;br&gt;SQL&amp;nbsp; - síncrono">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-77" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;dashed=1;dashPattern=8 4;endArrow=classic;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);strokeColor=default;" target="mOa-3YTkqyJ719td-Zik-60" value="&lt;span style=&quot;background-color: light-dark(rgb(23, 23, 23), rgb(23, 23, 23));&quot;&gt;8. Publicar evento&lt;br&gt;AMQP / RabbitMQ - asíncrono&lt;br&gt;Publisher confirms&lt;/span&gt;">
+          <mxGeometry relative="1" y="45" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-78" edge="1" parent="rol-c" source="mOa-3YTkqyJ719td-Zik-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;dashed=1;dashPattern=8 4;endArrow=classic;fontSize=13;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.35;entryY=0;fillColor=none;fontStyle=0;fontColor=light-dark(#333333,#FFFFFF);" target="mOa-3YTkqyJ719td-Zik-61" value="9. Entregar evento&lt;br&gt;AMQP / RabbitMQ - asíncrono&lt;br&gt;ACK del consumidor tras procesar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-79" parent="rol-c" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;Registro de operaciones&lt;/span&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Clave única: (socio, idOperacion)&lt;/span&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Estado + dictamen + outbox&lt;/span&gt;" vertex="1">
+          <mxGeometry height="130" width="220" x="85" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="core" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=17;" value="Núcleo bancario heredado (core)" vertex="1">
+          <mxGeometry height="76" width="440" x="93" y="694" as="geometry" />
+        </mxCell>
+        <mxCell id="b5" edge="1" parent="1" source="b-adaptador" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="core" value="5 · Interfaz nativa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="72" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-82" edge="1" parent="1" source="mOa-3YTkqyJ719td-Zik-52" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;strokeWidth=1.4;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=14;fontColor=default;labelBackgroundColor=default;endArrow=block;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="core">
+          <mxGeometry relative="1" x="-0.0807" as="geometry">
+            <Array as="points">
+              <mxPoint x="-447" y="940" />
+              <mxPoint x="140" y="940" />
+            </Array>
+            <mxPoint x="-442.00000000000045" y="1400" as="sourcePoint" />
+            <mxPoint x="455" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-83" connectable="0" parent="mOa-3YTkqyJ719td-Zik-82" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;fontSize=14;" value="&lt;div&gt;4a. Consulta de cuenta y reserva de fondos / respuesta&lt;/div&gt;&lt;div&gt;Comunicación síncrona&lt;/div&gt;&lt;div&gt;Protocolo y middleware según la interfaz del core&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.6903" y="-4" as="geometry">
+            <mxPoint x="-753" y="56" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-1" parent="1" style="swimlane;html=1;startSize=44;horizontal=1;collapsible=0;rounded=0;fontStyle=1;fontSize=18;align=left;spacingLeft=12;fillColor=none;swimlaneFillColor=none;labelBackgroundColor=none;labelBorderColor=none;" value="A. Cuentas, notificaciones y auditoría" vertex="1">
+          <mxGeometry height="775" width="1375" x="-1480" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-2" parent="3T96mLCECiB4Q5YyVZN_-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Socio" vertex="1">
+          <mxGeometry height="60" width="30" x="57" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-3" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Cliente banca móvil/web&lt;/b&gt;&lt;br&gt;app móvil y navegador" vertex="1">
+          <mxGeometry height="60" width="150" x="137" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-4" parent="3T96mLCECiB4Q5YyVZN_-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Cajero de ventanilla" vertex="1">
+          <mxGeometry height="60" width="30" x="57" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-5" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Terminal de ventanilla&lt;/b&gt;&lt;br&gt;red interna de la agencia" vertex="1">
+          <mxGeometry height="60" width="150" x="137" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-6" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Servicio de cuentas&lt;/b&gt;&lt;br&gt;&lt;br&gt;Consulta saldos y movimientos.&lt;br&gt;No guarda saldo propio:&lt;br&gt;el saldo oficial lo da el core." vertex="1">
+          <mxGeometry height="200" width="200" x="517" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-7" parent="3T96mLCECiB4Q5YyVZN_-1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeWidth=4;fontStyle=1;fontSize=12;fillColor=none;swimlaneFillColor=none;" value="Broker de mensajería RabbitMQ · AMQP 0-9-1 (único, compartido)" vertex="1">
+          <mxGeometry height="380" width="400" x="462" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-8" parent="3T96mLCECiB4Q5YyVZN_-7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Exchange&lt;br&gt;operaciones&lt;/b&gt;&lt;br&gt;(tipo topic)&lt;br&gt;&lt;br&gt;Recibe todos los eventos y los copia a cada cola" vertex="1">
+          <mxGeometry height="300" width="120" x="33" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-9" parent="3T96mLCECiB4Q5YyVZN_-7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;notificaciones.q&lt;/b&gt;&lt;br&gt;cola durable" vertex="1">
+          <mxGeometry height="60" width="140" x="245" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-10" parent="3T96mLCECiB4Q5YyVZN_-7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;auditoria.q&lt;/b&gt;&lt;br&gt;cola durable (quorum)" vertex="1">
+          <mxGeometry height="60" width="140" x="245" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-11" parent="3T96mLCECiB4Q5YyVZN_-7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;auditoria.dlq&lt;/b&gt;&lt;br&gt;mensajes no procesables" vertex="1">
+          <mxGeometry height="55" width="140" x="245" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-22" edge="1" parent="3T96mLCECiB4Q5YyVZN_-7" source="3T96mLCECiB4Q5YyVZN_-8" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=1.025;exitY=0.166;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitPerimeter=0;" target="3T96mLCECiB4Q5YyVZN_-9" value="binding">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="123" y="100.00099999999998" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-12" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Servicio de notificaciones&lt;/b&gt;&lt;br&gt;avisa al socio cuando el core confirmó" vertex="1">
+          <mxGeometry height="60" width="190" x="1077" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-13" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Servicio de auditoría&lt;/b&gt;&lt;br&gt;registra toda operación" vertex="1">
+          <mxGeometry height="60" width="190" x="1077" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-32" edge="1" parent="3T96mLCECiB4Q5YyVZN_-1" source="3T96mLCECiB4Q5YyVZN_-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#736CA8;fontColor=#1A1A1A;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="3T96mLCECiB4Q5YyVZN_-31" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-14" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Proveedor push / SMS / correo&lt;/b&gt;&lt;br&gt;entrega el aviso al socio" vertex="1">
+          <mxGeometry height="60" width="190" x="1077" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-15" parent="3T96mLCECiB4Q5YyVZN_-1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Base de auditoría&lt;/b&gt;&lt;br&gt;solo anexar" vertex="1">
+          <mxGeometry height="80" width="140" x="1102" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-16" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=6;fontSize=11;fillColor=none;" value="&lt;b&gt;R5 · Auditoría caída.&lt;/b&gt; Los eventos esperan en &lt;i&gt;auditoria.q&lt;/i&gt; (cola durable, mensajes persistentes, ack manual) y se procesan al recuperarse. Si el broker no responde, el publicador los guarda en su bandeja de salida y reintenta. Ningún cliente espera a auditoría." vertex="1">
+          <mxGeometry height="90" width="370" x="57" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-21" edge="1" parent="3T96mLCECiB4Q5YyVZN_-1" source="3T96mLCECiB4Q5YyVZN_-6" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=-0.003;entryY=0.532;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;entryPerimeter=0;" target="3T96mLCECiB4Q5YyVZN_-8" value="&lt;b&gt;A4a&lt;/b&gt; · Pub/Sub · asíncrona&lt;br&gt;AMQP 0-9-1 · RabbitMQ&lt;br&gt;ConsultaRealizada(idOperacion, cuenta)">
+          <mxGeometry relative="1" x="-0.3764" y="-30" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="617" y="330" />
+              <mxPoint x="330" y="330" />
+              <mxPoint x="330" y="559.6" />
+            </Array>
+            <mxPoint x="577" y="283.9999999999998" as="sourcePoint" />
+            <mxPoint x="575" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-31" parent="3T96mLCECiB4Q5YyVZN_-1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;fontSize=12;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="&lt;b&gt;Proveedor push / SMS / correo&lt;/b&gt;&lt;br&gt;entrega el aviso al socio" vertex="1">
+          <mxGeometry height="60" width="190" x="1077" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-34" edge="1" parent="3T96mLCECiB4Q5YyVZN_-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=12;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="core" value="&lt;b&gt;A3&lt;/b&gt; · síncrona · interfaz nativa&lt;br&gt;del core, vía adaptador del core&lt;br&gt;ObtenerSaldo / Movimientos, plazo 1,5 s">
+          <mxGeometry relative="1" x="0.247" y="30" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="717" y="165" as="sourcePoint" />
+            <mxPoint x="1717" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-17" edge="1" parent="3T96mLCECiB4Q5YyVZN_-1" style="endArrow=none;html=1;strokeWidth=1;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" value="usa">
+          <mxGeometry relative="1" x="-0.08" y="13" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="87" y="103.5" as="sourcePoint" />
+            <mxPoint x="137" y="103.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-18" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-4" style="endArrow=none;html=1;strokeWidth=1;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-5" value="usa">
+          <mxGeometry relative="1" x="-0.08" y="14" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-19" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-3" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-6" value="&lt;b&gt;A1&lt;/b&gt; · RPC · síncrona&lt;br&gt;gRPC-Web · HTTP/2 + TLS&lt;br&gt;ConsultarSaldo(idCuenta) → saldo">
+          <mxGeometry relative="1" x="-0.0174" y="24" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-20" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-5" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-6" value="&lt;b&gt;A2&lt;/b&gt; · RPC · síncrona&lt;br&gt;gRPC · HTTP/2 + TLS&lt;br&gt;ConsultarSaldo(idCuenta) → saldo">
+          <mxGeometry relative="1" x="-0.0174" y="24" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-23" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-8" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=1;exitY=0.53333;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-10" value="binding">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-24" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-10" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-11" value="nack → DLX">
+          <mxGeometry relative="1" y="-37" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-25" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-9" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-12" value="&lt;b&gt;A5&lt;/b&gt; · Mensajería · asíncrona&lt;br&gt;AMQP · cola durable&lt;br&gt;evento + ack manual">
+          <mxGeometry relative="1" x="0.0696" y="30" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-26" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-10" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-13" value="&lt;b&gt;A6&lt;/b&gt; · Mensajería · asíncrona&lt;br&gt;AMQP · cola durable&lt;br&gt;evento + ack idempotente">
+          <mxGeometry relative="1" x="-0.0174" y="30" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-27" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-12" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-14" value="&lt;b&gt;A7&lt;/b&gt; · REST · HTTPS&lt;br&gt;síncrona, con reintentos&lt;br&gt;aviso(idOperacion, canal)">
+          <mxGeometry relative="1" y="-88" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-28" edge="1" parent="1" source="3T96mLCECiB4Q5YyVZN_-13" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" target="3T96mLCECiB4Q5YyVZN_-15" value="&lt;b&gt;A8&lt;/b&gt; · Sockets TCP (BD) · síncrona&lt;br&gt;driver PostgreSQL&lt;br&gt;INSERT de evento (solo anexar)">
+          <mxGeometry relative="1" y="98" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3T96mLCECiB4Q5YyVZN_-35" edge="1" parent="1" source="oCIqJ3nLQlLC4T8pfypU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;dashed=1;endArrow=block;endFill=1;exitX=0.341;exitY=0.061;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="3T96mLCECiB4Q5YyVZN_-8" value="C6 · Evento asíncrono · AMQP · RabbitMQ&lt;br&gt;OperaciónConfirmada(idOperacion, tipo, monto)">
+          <mxGeometry relative="1" x="-0.5116" y="-22" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1028.5" y="182" />
+              <mxPoint y="182" />
+              <mxPoint y="890" />
+              <mxPoint x="-925" y="890" />
+            </Array>
+            <mxPoint x="640" y="631" as="sourcePoint" />
+            <mxPoint x="-620" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-87" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.695;entryY=-0.038;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;strokeWidth=1.4;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=14;fontColor=default;labelBackgroundColor=default;endArrow=block;endFill=1;" target="mOa-3YTkqyJ719td-Zik-52">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="313" y="1080" />
+              <mxPoint x="-396.3" y="1080" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mOa-3YTkqyJ719td-Zik-88" connectable="0" parent="mOa-3YTkqyJ719td-Zik-87" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;fontSize=14;" value="4b. Confirmación de operación&lt;div&gt;Reserva / débito confirmado + referenciaCore + idOperacion&lt;/div&gt;&lt;div&gt;Interfaz nativa - síncrona - respuesta&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.1283" y="1" as="geometry">
+            <mxPoint x="-207" y="-81" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-35" parent="1" style="rounded=0;html=0;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="920" width="1484" x="630" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-36" parent="1" style="rounded=0;" value="" vertex="1">
+          <mxGeometry height="1" width="1484" x="630" y="1169" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-37" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=21;fontStyle=1;align=left;verticalAlign=middle;spacing=8;" value="D. Retiro en cajero automático" vertex="1">
+          <mxGeometry height="38" width="1460" x="636" y="1125" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Cajero automático&lt;/b&gt;&lt;br&gt;Plazo máximo: 15 s&lt;br&gt;Entrega y registro local" vertex="1">
+          <mxGeometry height="130" width="270" x="672" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Servidor de cajeros&lt;/b&gt;&lt;br&gt;Coordina retiro y reverso&lt;br&gt;idOperacion" vertex="1">
+          <mxGeometry height="130" width="300" x="1222" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Adaptador del core&lt;/b&gt;&lt;br&gt;Interfaz nativa" vertex="1">
+          <mxGeometry height="130" width="280" x="1782" y="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-65" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="core">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2190" y="1590" />
+              <mxPoint x="2190" y="950" />
+              <mxPoint x="423" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Núcleo bancario heredado&lt;/b&gt;&lt;br&gt;Débito, estado* y reverso" vertex="1">
+          <mxGeometry height="110" width="280" x="1782" y="1535" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Registro de retiros&lt;/b&gt;&lt;br&gt;Estado + outbox" vertex="1">
+          <mxGeometry height="110" width="300" x="1222" y="1535" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-43" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Publicador de outbox&lt;/b&gt;&lt;br&gt;Recupera eventos pendientes" vertex="1">
+          <mxGeometry height="110" width="300" x="1222" y="1785" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=19;spacing=10;" value="&lt;b&gt;Broker único&lt;/b&gt;&lt;br&gt;Compartido con A" vertex="1">
+          <mxGeometry height="110" width="280" x="1782" y="1785" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-45" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-38" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=1.0;exitY=0.15384615384615385;exitDx=0;exitDy=0;entryX=0.0;entryY=0.15384615384615385;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-46" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D1 · Solicitud de retiro&#xa;Socket TCP/TLS" vertex="1">
+          <mxGeometry height="49" width="270" x="947" y="1207" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-47" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-39" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=0.0;exitY=0.5384615384615384;exitDx=0;exitDy=0;entryX=1.0;entryY=0.5384615384615384;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-48" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D2 · Respuesta / autorización" vertex="1">
+          <mxGeometry height="34" width="270" x="947" y="1274" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-49" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-38" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=1.0;exitY=0.9230769230769231;exitDx=0;exitDy=0;entryX=0.0;entryY=0.9230769230769231;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-50" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D3 · Confirmación de entrega" vertex="1">
+          <mxGeometry height="32" width="270" x="947" y="1325" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-51" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-39" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=1.0;exitY=0.19230769230769232;exitDx=0;exitDy=0;entryX=0.0;entryY=0.19230769230769232;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-52" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D4 · Solicitar débito&#xa;Plazo del core: 8 s" vertex="1">
+          <mxGeometry height="51" width="250" x="1527" y="1208" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-53" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-39" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=1;dashPattern=7 4;exitX=1.0;exitY=0.8461538461538461;exitDx=0;exitDy=0;entryX=0.0;entryY=0.8461538461538461;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-54" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D5 · Reverso condicional&#xa;Idempotente por idOperacion" vertex="1">
+          <mxGeometry height="52" width="250" x="1527" y="1292" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-55" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-40" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-56" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=16;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="Interfaz nativa&#xa;Débito / reverso&#xa;y resultado" vertex="1">
+          <mxGeometry height="80" width="175" x="1930" y="1408" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-57" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-39" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-58" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=17;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D6 · Registrar estado&#xa;y evento en outbox&#xa;Misma transacción local*" vertex="1">
+          <mxGeometry height="80" width="300" x="1390" y="1408" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-59" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-42" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=0;dashPattern=7 4;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-60" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=17;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D7 · Leer eventos&#xa;pendientes de outbox" vertex="1">
+          <mxGeometry height="65" width="300" x="1392" y="1677" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-61" edge="1" parent="1" source="EqpZSwqhLmhb4S-RZbNd-43" style="edgeStyle=none;rounded=0;html=0;endArrow=block;endFill=1;strokeWidth=1.35;dashed=1;dashPattern=7 4;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;" target="EqpZSwqhLmhb4S-RZbNd-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-62" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=Arial;fontSize=17;fontStyle=0;align=center;verticalAlign=middle;spacing=8;" value="D8 · Publicar evento&#xa;Asíncrono al retiro" vertex="1">
+          <mxGeometry height="55" width="250" x="1527" y="1779" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-63" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=18;spacing=10;" value="&lt;b&gt;Mensaje de formato fijo&lt;/b&gt;&lt;br&gt;Operación · tarjeta · monto&lt;br&gt;Código de cajero&lt;br&gt;&lt;br&gt;Sin respuesta en 15 s:&lt;br&gt;NO entregar efectivo" vertex="1">
+          <mxGeometry height="190" width="440" x="672" y="1535" as="geometry" />
+        </mxCell>
+        <mxCell id="EqpZSwqhLmhb4S-RZbNd-64" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;strokeWidth=1.2;fontFamily=Arial;fontSize=17;spacing=10;" value="&lt;b&gt;Comprobación y reverso&lt;/b&gt;&lt;br&gt;Confirmación ausente ≠ no entrega.&lt;br&gt;Verificar evidencia antes de revertir.*&lt;br&gt;Ver reglas en la pestaña de notas." vertex="1">
+          <mxGeometry height="110" width="440" x="672" y="1785" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
