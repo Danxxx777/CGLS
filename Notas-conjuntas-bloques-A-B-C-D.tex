@@ -2,12 +2,14 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[spanish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{enumitem}
-\usepackage{microtype}
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \usepackage[hidelinks]{hyperref}
 
+\setlength{\emergencystretch}{2em}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.6em}
 \setlist[enumerate]{leftmargin=*, itemsep=0.7em}
@@ -29,7 +31,7 @@
     Solicitud síncrona por la interfaz nativa del core, a través de su adaptador, con \texttt{ObtenerSaldo} y movimientos. Lleva un plazo de 1,5 s para que el socio reciba un error claro y no una espera indefinida \cite{grpcdeadlines}. El servicio de cuentas no guarda saldo propio.
 
     \item \textbf{A4a y C6. Servicio de cuentas y Servicio de transferencias al exchange \texttt{operaciones}.}
-    Publicación asíncrona por AMQP 0-9-1 en RabbitMQ, con tipo \textit{topic}. Cuentas publica \texttt{ConsultaRealizada}. Transferencias publica \texttt{OperaciónConfirmada} después de que el core confirma. El Rol D publicará los eventos de retiro y reverso; esa flecha falta en el diagrama.
+    Publicación asíncrona por AMQP 0-9-1 en RabbitMQ, con tipo \textit{topic}. Cuentas publica \texttt{ConsultaRealizada}. Transferencias publica \texttt{OperaciónConfirmada} después de que el core confirma. El publicador del bloque D envía los eventos de retiro y reverso mediante D8 al mismo exchange, con los estados confirmados que se detallan en sus notas.
 
     \item \textbf{A5. Cola \texttt{notificaciones.q} al Servicio de notificaciones.}
     Entrega asíncrona desde una cola durable. El servicio confirma el mensaje de forma manual solo tras procesarlo \cite{rabbitmqconfirms}.
@@ -48,16 +50,16 @@
 
 \begin{enumerate}
     \item \textbf{R1 y R2. Consulta de saldo.}
-    El saldo oficial solo existe en el core. Guardar uno en cuentas arriesgaría mostrar un saldo que no refleja un débito reciente. Se usa RPC síncrona porque alguien espera la respuesta. Se descartó la mensajería, que añade un salto, y REST con JSON sobre HTTP/1.1, que no ofrece plazo por llamada \cite{grpcdeadlines}. El plazo de 1,5 s es una decisión de diseño del equipo.
+    El saldo oficial solo existe en el core. Guardar uno en cuentas arriesgaría mostrar un saldo que no refleja un débito reciente. Se usa RPC síncrona porque alguien espera la respuesta. Se descartó la mensajería, que añade un salto, y se prefirió gRPC frente a REST con JSON por su contrato y su gestión explícita de plazos; un cliente REST también puede configurar tiempos de espera \cite{grpcdeadlines}. El plazo de 1,5 s es una decisión de diseño del equipo.
 
     \item \textbf{R1 y R6. Notificaciones fuera del flujo crítico.}
-    El aviso no es necesario para completar la operación. Si fuera síncrono, una caída del proveedor de SMS retrasaría o rechazaría transferencias y retiros. Por eso el evento se publica después de que el core confirma y notificaciones lo consume cuando puede. Se usa publicación/suscripción porque el mismo evento alimenta a notificaciones y a auditoría sin que el publicador los conozca \cite{hohpe2003}. Se eligió RabbitMQ sobre Kafka porque el volumen del enunciado, hasta 300 transacciones por segundo, no exige un registro de eventos distribuido a gran escala; es un criterio del equipo, y Kafka sería la opción para reprocesar historia.
+    El aviso no es necesario para completar la operación. Si fuera síncrono, una caída del proveedor de SMS retrasaría o rechazaría transferencias y retiros. Por eso los eventos se publican después de confirmar el resultado correspondiente y notificaciones los consume cuando puede. En transferencias se exige confirmación bancaria; en retiros se comprueba también la entrega de efectivo, y en reversos la devolución confirmada. Se usa publicación/suscripción porque el mismo evento alimenta a notificaciones y a auditoría sin que el publicador los conozca \cite{hohpe2003}. Se eligió RabbitMQ sobre Kafka porque el volumen del enunciado, hasta 300 transacciones por segundo, no exige un registro de eventos distribuido a gran escala; es un criterio del equipo, y Kafka sería la opción para reprocesar historia.
 
     \item \textbf{R2 y F3. Entrega sin pérdidas y sin duplicados.}
     Los mensajes son persistentes, el publicador espera la confirmación del broker y los consumidores confirman tras procesar \cite{rabbitmqconfirms}. La entrega es al menos una vez, por lo que puede haber duplicados. Cada evento lleva \texttt{idOperacion} e \texttt{idEvento}, y los consumidores ignoran los repetidos \cite{featonbyretries}. Así el socio no recibe dos avisos por una misma operación.
 
     \item \textbf{R5. Auditoría caída.}
-    Los eventos esperan en \texttt{auditoria.q} y se procesan al recuperarse. Si el broker no responde, el servicio publicador guarda el evento en su bandeja de salida junto con el estado y reintenta después \cite{awsoutbox}. La cola y la bandeja tienen espacio finito, por lo que se dimensionan y se alerta por acumulación. Si ni el broker ni la bandeja pueden guardar el evento, la operación se rechaza.
+    Los eventos esperan en \texttt{auditoria.q} y se procesan al recuperarse. Si el broker no responde, el servicio publicador guarda el evento en su bandeja de salida junto con el estado y reintenta después \cite{awsoutbox}. La cola y la bandeja tienen espacio finito, por lo que se dimensionan y se alerta por acumulación. Si el registro persistente no está disponible, no se inicia un nuevo movimiento. Si el core ya lo ejecutó y falla la escritura local, se recupera y concilia el resultado; no se informa un rechazo definitivo sin comprobarlo.
 
     \item \textbf{R6. Disponibilidad.}
     Notificaciones y auditoría quedan fuera de la ruta crítica, así que su caída no detiene transferencias ni retiros. El servicio de cuentas no guarda estado y puede replicarse.
@@ -66,7 +68,7 @@
 \subsubsection{Alternativas descartadas}
 
 \begin{itemize}
-    \item REST con JSON sobre HTTP/1.1 para consultar saldo: mensajes más pesados y sin plazo por llamada.
+    \item REST con JSON sobre HTTP/1.1 para consultar saldo: se prefirió el contrato RPC y la gestión de plazos de gRPC; REST también admite tiempos de espera configurados en el cliente.
     \item Mensajería para consultar saldo: añade un salto mientras alguien espera.
     \item Notificación síncrona dentro de la operación: una caída del proveedor frenaría las operaciones.
     \item Kafka: el volumen del enunciado no lo justifica.
@@ -340,7 +342,92 @@
 \end{enumerate}
 
 
-\begin{thebibliography}{9}
+
+\section{Retiro en cajero automático de Ahorro Futuro}
+
+\subsection{Notas del bloque D}
+
+El bloque D coordina el débito bancario, la entrega física de efectivo y su registro. No se entrega efectivo si la autorización válida no llega dentro de 15 segundos. El reverso requiere distinguir una entrega fallida de una confirmación perdida. Las medidas adicionales se presentan como propuestas de diseño que deben validarse con el equipo.
+
+\subsubsection{Interacciones del diagrama}
+
+\begin{enumerate}
+    \item \textbf{D1. Cajero automático al Servidor de cajeros.}
+    El cajero envía por socket TCP/TLS el mensaje fijo con operación, tarjeta, monto y código de cajero. Se propone incorporar \texttt{idOperacion} como correlación y conservarlo en los reintentos; no reemplaza los campos exigidos. Repetir una solicitud no debe producir otro débito \cite{featonbyretries}. El formato, tamaño y codificación de los campos deben acordarse.
+
+    \item \textbf{D2. Servidor de cajeros al Cajero automático.}
+    Devuelve autorización o rechazo asociado a \texttt{idOperacion}. Solo autoriza después de confirmar el débito en el core. El cajero valida la operación y el plazo antes de iniciar la dispensación; una autorización tardía no habilita la entrega.
+
+    \item \textbf{D3. Cajero automático al Servidor de cajeros.}
+    Informa el resultado del dispensador y la evidencia local del retiro. Se propone registrar de forma persistente el intento y su resultado para recuperar la información tras una desconexión o reinicio. El envío del mensaje no sustituye la comprobación de la entrega física.
+
+    \item \textbf{D4. Servidor de cajeros al Adaptador y al Core heredado.}
+    Solicita el débito con \texttt{idOperacion} y recibe el resultado y la referencia del core por su interfaz nativa. El plazo previsto es de 8 s, dentro de los 15 s del cajero. Si vence, el débito queda de resultado incierto hasta consultarlo o conciliarlo; el vencimiento no demuestra que no se ejecutó. El protocolo servidor--adaptador debe precisarse con el equipo.
+
+    \item \textbf{D5. Servidor de cajeros al Core para el reverso.}
+    Si existe débito y se verifica que no hubo entrega, el servidor solicita su reverso mediante el adaptador. Se propone distinguir la acción débito de la acción reverso dentro de \texttt{idOperacion}: repetir el reverso no debe generar créditos adicionales \cite{featonbyretries}. Solo se marca el reverso como confirmado después de comprobar el resultado del core.
+
+    \item \textbf{D6. Servidor de cajeros al Registro de retiros.}
+    Guarda el estado y el evento pendiente en una misma transacción local de la bandeja de salida \cite{awsoutbox}. Se propone conservar \texttt{idOperacion}, \texttt{idEvento}, cajero, monto, fecha, \texttt{referenciaCore} y evidencia de entrega. Esta transacción no incluye automáticamente al core ni al dispensador. El estado debe registrarse durante las transiciones necesarias, no únicamente al terminar el retiro.
+
+    \item \textbf{D7. Publicador de outbox y Registro de retiros.}
+    El publicador recupera eventos pendientes y conserva sus identificadores durante los reintentos. La flecha del diagrama representa el paso de datos hacia el publicador, que inicia la consulta. Deben recuperarse los pendientes después de reiniciar \cite{awsoutbox}.
+
+    \item \textbf{D8. Publicador de outbox al RabbitMQ compartido (A).}
+    Publicación asíncrona por AMQP 0-9-1 al exchange \texttt{operaciones}. Se proponen mensajes persistentes, colas durables y confirmaciones del publicador \cite{rabbitmqconfirms,rabbitmqreliability}. La confirmación del broker no significa que auditoría ya procesó el evento. El consumidor de A deduplica por \texttt{idEvento} y confirma después de procesar \cite{rabbitmqconfirms}.
+\end{enumerate}
+
+El orden normal es D1, D4, D2, dispensación y D3. D6 registra las transiciones necesarias; D7 y D8 publican fuera de la espera principal. D5 se ejecuta únicamente cuando corresponde el reverso. Los números identifican conexiones y no una secuencia lineal del 1 al 8.
+
+\subsubsection{Justificación del diseño}
+
+\begin{enumerate}
+    \item \textbf{R4. Límite de 15 s y comprobación de entrega.}
+    Se propone contar el plazo desde el envío de D1 mediante un reloj monotónico. Antes de iniciar la entrega, el cajero comprueba que la autorización corresponda a la operación vigente y no haya vencido. Los 8 s del core dejan margen para la red y el procesamiento, pero no garantizan el plazo total. Se contrasta el registro local, el resultado del dispensador y el estado del core. Una autorización o un ACK de TCP no prueban que el socio recibió efectivo; la evidencia disponible depende del dispositivo.
+
+    \item \textbf{F1. Respuesta perdida o tardía y reverso.}
+    Al vencer el plazo, el cajero bloquea una nueva entrega de esa operación y registra el vencimiento. El servidor consulta el débito. Si este se confirma y no hubo entrega, solicita D5; si sigue incierto, conserva la operación pendiente y no repite ciegamente el débito \cite{featonbyretries}. Un reverso no encontrado tampoco descarta que aparezca un débito tardío: la conciliación debe resolver ambos resultados.
+    \begin{itemize}
+        \item Débito confirmado y efectivo no entregado: solicitar reverso idempotente y comprobar su resultado antes de marcar la operación como revertida.
+        \item Débito confirmado y entrega completa: mantener el débito y recuperar o reenviar D3, sin volver a dispensar.
+        \item Débito o entrega inciertos: marcar la operación como pendiente de conciliación; no afirmar éxito ni reverso definitivo.
+        \item Entrega parcial o resultado físico anómalo: conservar importe y evidencia y aplicar conciliación; no asumir un reverso total automático.
+    \end{itemize}
+
+    \item \textbf{Idempotencia y recuperación.}
+    Se conserva la relación entre identificador, datos y estado. Se rechaza reutilizar el mismo identificador con datos diferentes. Débito y reverso requieren controles independientes y un resultado persistente; el registro local por sí solo no evita repetir efectos en el core \cite{featonbyretries}. Tras reiniciar, el cajero debe recuperar el estado antes de considerar otra dispensación de la misma solicitud.
+
+    \item \textbf{R5. Auditoría y notificaciones.}
+    El estado y el evento se guardan juntos en el outbox y se publican con reintentos \cite{awsoutbox}. Si el core confirmó y falla la escritura local, se recupera el resultado oficial y se registra el evento con un identificador estable. Se distingue retiro entregado, reverso confirmado y resultado pendiente. La notificación de éxito requiere entrega comprobada; un reverso se notifica como concluido únicamente tras confirmarlo.
+
+    \item \textbf{R6. Disponibilidad del 99,95 \%.}
+    Se propone acordar con B y C redundancia y recuperación del servidor y del registro, plazos acotados y monitorización. El broker único del diagrama es el servicio compartido definido por A, no un segundo broker exclusivo de D. Su despliegue debe ser coherente con las colas replicadas propuestas por A; si existe una sola instancia física, persiste un punto de fallo que debe evaluarse. La durabilidad y recuperación requieren configuración explícita \cite{rabbitmqreliability,rabbitmqquorum}.
+    El objetivo se mide sobre un servicio y período acordados. Para un mes de 30 días, el presupuesto temporal se calcula multiplicando 43\,200 minutos por la fracción de indisponibilidad (1 menos 0,9995): resulta 21,6 minutos. Es un cálculo y no un resultado observado. Deben probarse caída del servidor, respuesta perdida del core, reinicio del cajero y caída del broker; todavía no hay resultados que permitan afirmar el cumplimiento de R6.
+\end{enumerate}
+
+\subsubsection{Alternativas descartadas}
+
+\begin{itemize}
+    \item Repetir el débito con un identificador nuevo: puede originar otro cargo. Se conserva \texttt{idOperacion} y se consulta o concilia el resultado \cite{featonbyretries}.
+    \item Aceptar una autorización fuera de los 15 s: contradice R4 y puede coincidir con el tratamiento del reverso. Una respuesta tardía no habilita una nueva dispensación.
+    \item Revertir por cualquier confirmación ausente: el efectivo pudo entregarse. La ausencia activa la verificación; el reverso se ejecuta cuando se establece que corresponde.
+    \item Publicar sin persistencia previa: una caída entre registro y envío deja una publicación sin recuperar. El outbox conserva el evento junto con el cambio local \cite{awsoutbox}.
+    \item Notificar éxito por la confirmación del broker: esta confirma publicación, no entrega física de efectivo ni procesamiento del consumidor \cite{rabbitmqconfirms}.
+\end{itemize}
+
+\subsubsection{Coordinación con los demás bloques}
+
+\begin{enumerate}
+    \item \textbf{Con A.} Acordar los eventos de retiro entregado, reverso confirmado y resultado pendiente, conservando su relación con la operación original. Auditoría debe reconstruir el proceso; notificaciones debe distinguir los estados confirmados de los pendientes.
+    \item \textbf{Con B y C.} Unificar el identificador de operación, el broker compartido y la justificación de R6, sin duplicar nodos de servicios compartidos.
+    \item \textbf{Decisiones pendientes.} Definir tamaño y codificación del mensaje fijo, transporte de la correlación, protocolo servidor--adaptador, consulta admitida por el core y evidencia disponible en el dispensador. La descripción inicial ordena el reverso ante confirmación ausente, pero el diseño propone verificar primero si hubo entrega. Esta precisión debe acordarse con A y revisarse con el docente si el contrato del escenario no la resuelve.
+\end{enumerate}
+
+\section*{Declaración de uso de inteligencia artificial}
+
+Para preparar las notas y el diagrama del bloque D se utilizó ChatGPT como apoyo para organizar el contenido y consultar documentación técnica. Las propuestas no representan una implementación ni pruebas ejecutadas. La revisión, validación del diseño e integración final corresponden al equipo. Cada integrante debe completar esta declaración con el uso de IA que corresponda a su propio bloque.
+
+\begin{thebibliography}{99}
 
 \bibitem{birrell1984}
 A. D. Birrell y B. J. Nelson,
@@ -351,43 +438,11 @@ DOI:
 \href{https://doi.org/10.1145/2080.357392}
 {10.1145/2080.357392}.
 
-\bibitem{garciamolina1987}
-H. Garcia-Molina y K. Salem,
-``Sagas,''
-en \textit{Proceedings of the 1987 ACM SIGMOD
-International Conference on Management of Data},
-pp. 249--259, 1987.
-DOI:
-\href{https://doi.org/10.1145/38713.38742}
-{10.1145/38713.38742}.
-
-\bibitem{helland2017}
-P. Helland,
-``Life beyond distributed transactions,''
-\textit{Communications of the ACM},
-vol. 60, núm. 2, pp. 46--54, 2017.
-DOI:
-\href{https://doi.org/10.1145/3009826}
-{10.1145/3009826}.
-
 \bibitem{grpcdeadlines}
 gRPC Authors,
-“Deadlines”,
+``Deadlines'',
 \textit{gRPC Documentation}.
 \url{https://grpc.io/docs/guides/deadlines/}.
-
-\bibitem{featonbyretries}
-M. Featonby,
-“Making retries safe with idempotent APIs”,
-\textit{The Amazon Builders’ Library}.
-\url{https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/}.
-
-\bibitem{awsoutbox}
-Amazon Web Services,
-“Transactional outbox pattern”,
-\textit{AWS Prescriptive Guidance}.
-\url{https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html}.
-
 
 \bibitem{rabbitmqconfirms}
 RabbitMQ,
@@ -411,6 +466,43 @@ RabbitMQ,
 G. Hohpe y B. Woolf,
 \textit{Enterprise Integration Patterns: Designing, Building, and Deploying Messaging Solutions}.
 Boston, MA, EE.\,UU.: Addison-Wesley, 2003, ISBN 978-0-321-20068-6.
+
+\bibitem{featonbyretries}
+M. Featonby,
+``Making retries safe with idempotent APIs'',
+\textit{The Amazon Builders' Library}.
+\url{https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/}.
+
+\bibitem{awsoutbox}
+Amazon Web Services,
+``Transactional outbox pattern'',
+\textit{AWS Prescriptive Guidance}.
+\url{https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html}.
+
+\bibitem{helland2017}
+P. Helland,
+``Life beyond distributed transactions,''
+\textit{Communications of the ACM},
+vol. 60, núm. 2, pp. 46--54, 2017.
+DOI:
+\href{https://doi.org/10.1145/3009826}
+{10.1145/3009826}.
+
+\bibitem{garciamolina1987}
+H. Garcia-Molina y K. Salem,
+``Sagas,''
+en \textit{Proceedings of the 1987 ACM SIGMOD
+International Conference on Management of Data},
+pp. 249--259, 1987.
+DOI:
+\href{https://doi.org/10.1145/38713.38742}
+{10.1145/38713.38742}.
+
+\bibitem{rabbitmqreliability}
+RabbitMQ,
+``Reliability Guide'',
+\textit{RabbitMQ Documentation}.
+\url{https://www.rabbitmq.com/docs/reliability}.
 
 \end{thebibliography}
 
