@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram id="ahorro-futuro-b" name="Bloque B">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageScale="1" pageWidth="860" pageHeight="670">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titulo" value="Cooperativa Ahorro Futuro" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=30;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="23" width="760" height="42" />
+        </mxCell>
+        <mxCell id="actividad" value="GA-TL-01 · Escenario 4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="67" width="760" height="22" />
+        </mxCell>
+        <mxCell id="rol-b" value="B. Transferencia interna" style="swimlane;html=1;startSize=44;horizontal=1;collapsible=0;rounded=0;fillColor=none;swimlaneFillColor=none;fontStyle=1;fontSize=18;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="100" width="760" height="380" />
+        </mxCell>
+        <mxCell id="b-cliente" value="Cliente móvil/web compartido (A)" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="24" y="77" width="158" height="78" />
+        </mxCell>
+        <mxCell id="b-servicio" value="Servicio de transferencias" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;fontStyle=1;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="293" y="77" width="174" height="78" />
+        </mxCell>
+        <mxCell id="b-antifraude" value="Servicio antifraude (C)" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;dashed=1;dashPattern=4 3;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="578" y="77" width="158" height="78" />
+        </mxCell>
+        <mxCell id="b-adaptador" value="Adaptador del core" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="24" y="256" width="158" height="82" />
+        </mxCell>
+        <mxCell id="b-registro" value="Registro persistente por idOperacion" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="293" y="256" width="174" height="82" />
+        </mxCell>
+        <mxCell id="b-auditoria" value="RabbitMQ · Exchange operaciones (A)" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fontSize=18;spacing=9;dashed=1;dashPattern=4 3;" vertex="1" parent="rol-b">
+          <mxGeometry as="geometry" x="578" y="256" width="158" height="82" />
+        </mxCell>
+        <mxCell id="core" value="Núcleo bancario heredado (core)" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="540" width="350" height="76" />
+        </mxCell>
+        <mxCell id="leyenda" value="Línea continua = síncrona · Línea discontinua = asíncrona" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="50" y="630" width="760" height="24" />
+        </mxCell>
+        <mxCell id="b1" value="1 · REST/HTTPS" source="b-cliente" target="b-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="rol-b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b2" value="2 · gRPC / HTTP/2" source="b-servicio" target="b-antifraude" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="rol-b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b3" value="3 · SQL/TLS" source="b-servicio" target="b-registro" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="rol-b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-55" y="24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b4" value="4 · gRPC" source="b-servicio" target="b-adaptador" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.15;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="rol-b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-15" as="offset" />
+            <Array as="points">
+              <mxPoint x="319" y="205" />
+              <mxPoint x="103" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b5" value="5 · Interfaz nativa" source="b-adaptador" target="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.294286;entryY=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="78" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b6" value="6 · AMQP 0-9-1 / RabbitMQ" source="b-servicio" target="b-auditoria" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=14;strokeWidth=1.4;exitX=0.85;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="rol-b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-15" as="offset" />
+            <Array as="points">
+              <mxPoint x="441" y="205" />
+              <mxPoint x="657" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
