@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="app.diagrams.net">
   <diagram id="bloque-b" name="Bloque B">
-    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="800" math="0" shadow="0">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="760" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -37,12 +37,6 @@
         </mxCell>
         <mxCell id="actividad" value="GA-TL-01 · Escenario 4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" parent="1" vertex="1">
           <mxGeometry as="geometry" x="42" y="67" width="930" height="24" />
-        </mxCell>
-        <mxCell id="estados" value="ID repetido: devolver el estado existente.&lt;br&gt;Sin dictamen: queda pendiente de antifraude.&lt;br&gt;Core sin respuesta: conciliar antes de reintentar." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" parent="1" vertex="1">
-          <mxGeometry as="geometry" x="435" y="570" width="510" height="92" />
-        </mxCell>
-        <mxCell id="leyenda" value="Línea continua: síncrona · Línea discontinua: asíncrona" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=0;" parent="1" vertex="1">
-          <mxGeometry as="geometry" x="42" y="749" width="1356" height="28" />
         </mxCell>
         <mxCell id="b1" source="b-cliente" target="b-servicio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=1.35;fontSize=14;exitX=1.000000;exitY=0.500000;entryX=0.000000;entryY=0.500000;" edge="1" parent="rol-b" value="B1 · REST / HTTPS&lt;br&gt;ID, cuentas y monto">
           <mxGeometry as="geometry" relative="1">
