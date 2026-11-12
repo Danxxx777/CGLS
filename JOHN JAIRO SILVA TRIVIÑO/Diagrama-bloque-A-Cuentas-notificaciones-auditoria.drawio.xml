@@ -1,0 +1,157 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net">
+  <diagram id="bloqueA" name="Rol A - Cuentas, notificaciones y auditoria">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="&lt;b&gt;GA-TL-02 · Escenario 4: Cooperativa Ahorro Futuro&lt;/b&gt;&lt;br&gt;Bloque A: cuentas, notificaciones y auditoría" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="20" y="8" width="1000" height="44" as="geometry"/>
+        </mxCell>
+        <mxCell id="act_socio" value="Socio" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="30" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="cli" value="&lt;b&gt;Cliente banca móvil/web&lt;/b&gt;&lt;br&gt;app móvil y navegador" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="120" y="70" width="150" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="act_caj" value="Cajero de ventanilla" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="30" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="term" value="&lt;b&gt;Terminal de ventanilla&lt;/b&gt;&lt;br&gt;red interna de la agencia" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="120" y="190" width="150" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="cue" value="&lt;b&gt;Servicio de cuentas&lt;/b&gt;&lt;br&gt;&lt;br&gt;Consulta saldos y movimientos.&lt;br&gt;No guarda saldo propio:&lt;br&gt;el saldo oficial lo da el core." style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="60" width="200" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="core" value="&lt;b&gt;Núcleo bancario (core)&lt;/b&gt;&lt;br&gt;&lt;br&gt;Registra los saldos oficiales.&lt;br&gt;Sistema heredado compartido&lt;br&gt;con los Roles B, C y D." style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="960" y="60" width="200" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_u1" value="usa" style="endArrow=none;html=1;strokeWidth=1;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_socio" target="cli">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_u2" value="usa" style="endArrow=none;html=1;strokeWidth=1;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_caj" target="term">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A1" value="&lt;b&gt;A1&lt;/b&gt; · RPC · síncrona&lt;br&gt;gRPC-Web · HTTP/2 + TLS&lt;br&gt;ConsultarSaldo(idCuenta) → saldo" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;" edge="1" parent="1" source="cli" target="cue">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A2" value="&lt;b&gt;A2&lt;/b&gt; · RPC · síncrona&lt;br&gt;gRPC · HTTP/2 + TLS&lt;br&gt;ConsultarSaldo(idCuenta) → saldo" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;" edge="1" parent="1" source="term" target="cue">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A3" value="&lt;b&gt;A3&lt;/b&gt; · síncrona · interfaz nativa&lt;br&gt;del core, vía adaptador del core&lt;br&gt;ObtenerSaldo / Movimientos, plazo 1,5 s" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cue" target="core">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg" value="&lt;b&gt;Leyenda&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="275" width="390" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_s" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="305" as="sourcePoint"/>
+            <mxPoint x="88" y="305" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s_t" value="Síncrona (espera)" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="94" y="296" width="130" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_a" value="" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="328" as="sourcePoint"/>
+            <mxPoint x="88" y="328" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_a_t" value="Asíncrona (continúa)" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="94" y="319" width="130" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_id_t" value="A1-A8, C6: ID en las notas" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="52" y="342" width="170" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_sh" value="" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="298" width="30" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_sh_t" value="Servicio compartido" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="278" y="296" width="140" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_ex" value="" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="321" width="30" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_ex_t" value="Sistema externo" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="278" y="319" width="140" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_ow" value="" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="344" width="30" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_ow_t" value="Servicio del Rol A" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="278" y="342" width="140" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="pub_tr" value="&lt;b&gt;Servicio de transferencias&lt;/b&gt;&lt;br&gt;(bloque del Rol B)" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="410" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="pub_cj" value="&lt;b&gt;Servidor de cajeros&lt;/b&gt;&lt;br&gt;(bloque del Rol D)" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="broker" value="Broker de mensajería RabbitMQ · AMQP 0-9-1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeWidth=4;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="450" y="360" width="400" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="exch" value="&lt;b&gt;Exchange&lt;br&gt;operaciones&lt;/b&gt;&lt;br&gt;(tipo topic)&lt;br&gt;&lt;br&gt;Recibe todos los eventos y los copia a cada cola" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="broker">
+          <mxGeometry x="30" y="50" width="120" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="q_not" value="&lt;b&gt;notificaciones.q&lt;/b&gt;&lt;br&gt;cola durable" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="broker">
+          <mxGeometry x="240" y="70" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="q_aud" value="&lt;b&gt;auditoria.q&lt;/b&gt;&lt;br&gt;cola durable (quorum)" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="broker">
+          <mxGeometry x="240" y="180" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="q_dlq" value="&lt;b&gt;auditoria.dlq&lt;/b&gt;&lt;br&gt;mensajes no procesables" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;" vertex="1" parent="broker">
+          <mxGeometry x="240" y="280" width="140" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="not" value="&lt;b&gt;Servicio de notificaciones&lt;/b&gt;&lt;br&gt;avisa al socio cuando el core confirmó" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="430" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="aud" value="&lt;b&gt;Servicio de auditoría&lt;/b&gt;&lt;br&gt;registra toda operación" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="540" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="prov" value="&lt;b&gt;Proveedor push / SMS / correo&lt;/b&gt;&lt;br&gt;entrega el aviso al socio" style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="310" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dbaud" value="&lt;b&gt;Base de auditoría&lt;/b&gt;&lt;br&gt;solo anexar" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="660" width="140" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A4a" value="&lt;b&gt;A4a&lt;/b&gt; · Pub/Sub · asíncrona&lt;br&gt;AMQP 0-9-1 · RabbitMQ&lt;br&gt;evento ConsultaRealizada(idOperacion, cuenta)" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cue" target="exch">
+          <mxGeometry x="-0.45" relative="1" as="geometry">
+            <mxPoint x="0" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_A4b" value="&lt;b&gt;C6&lt;/b&gt; · Pub/Sub · asíncrona&lt;br&gt;AMQP 0-9-1 · RabbitMQ&lt;br&gt;OperaciónConfirmada(idOperacion, tipo, monto)" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.1;entryDx=0;entryDy=0;" edge="1" parent="1" source="pub_tr" target="exch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A4c" value="&lt;b&gt;D (pendiente)&lt;/b&gt; · Pub/Sub · asíncrona&lt;br&gt;AMQP 0-9-1 · RabbitMQ&lt;br&gt;Retiro / Reverso(idOperacion, tipo, monto)" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.6;entryDx=0;entryDy=0;" edge="1" parent="1" source="pub_cj" target="exch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_b1" value="binding" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.16667;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="exch" target="q_not">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_b2" value="binding" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.53333;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="exch" target="q_aud">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_dl" value="nack → DLX" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="q_aud" target="q_dlq">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A5" value="&lt;b&gt;A5&lt;/b&gt; · Mensajería · asíncrona&lt;br&gt;AMQP · cola durable&lt;br&gt;evento + ack manual" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="q_not" target="not">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A6" value="&lt;b&gt;A6&lt;/b&gt; · Mensajería · asíncrona&lt;br&gt;AMQP · cola durable&lt;br&gt;evento + ack idempotente" style="endArrow=open;endFill=0;dashed=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="q_aud" target="aud">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A7" value="&lt;b&gt;A7&lt;/b&gt; · REST · HTTPS&lt;br&gt;síncrona, con reintentos&lt;br&gt;aviso(idOperacion, canal)" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="not" target="prov">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_A8" value="&lt;b&gt;A8&lt;/b&gt; · Sockets TCP (BD) · síncrona&lt;br&gt;driver PostgreSQL&lt;br&gt;INSERT de evento (solo anexar)" style="endArrow=block;endFill=1;html=1;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="aud" target="dbaud">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="r5" value="&lt;b&gt;R5 · Auditoría caída.&lt;/b&gt; Los eventos esperan en &lt;i&gt;auditoria.q&lt;/i&gt; (cola durable, mensajes persistentes, ack manual) y se procesan al recuperarse. Si el broker no responde, el publicador los guarda en su bandeja de salida y reintenta. Ningún cliente espera a auditoría." style="fillColor=#ffffff;strokeColor=#000000;rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="650" width="370" height="90" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
